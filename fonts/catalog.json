@@ -1,0 +1,22 @@
+[
+  {"id":"bebas-neue","name":"Bebas Neue","file":"BebasNeue-Regular.ttf","directory":"bebas-neue","category":"display","style":"Regular","cutSafe":false,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"montserrat","name":"Montserrat","file":"Montserrat-wght.ttf","directory":"montserrat","category":"sans","style":"Variable 100–900","cutSafe":false,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"oswald","name":"Oswald","file":"Oswald-wght.ttf","directory":"oswald","category":"sans","style":"Variable 200–700","cutSafe":false,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"poppins","name":"Poppins","file":"Poppins-Regular.ttf","directory":"poppins","category":"sans","style":"Regular","cutSafe":false,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"raleway","name":"Raleway","file":"Raleway-wght.ttf","directory":"raleway","category":"sans","style":"Variable 100–900","cutSafe":false,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"nunito-sans","name":"Nunito Sans","file":"NunitoSans-wght.ttf","directory":"nunito-sans","category":"sans","style":"Variable","cutSafe":false,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"archivo","name":"Archivo","file":"Archivo-wght.ttf","directory":"archivo","category":"sans","style":"Variable","cutSafe":false,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"exo-2","name":"Exo 2","file":"Exo2-wght.ttf","directory":"exo-2","category":"tech","style":"Variable 100–900","cutSafe":false,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"orbitron","name":"Orbitron","file":"Orbitron-wght.ttf","directory":"orbitron","category":"tech","style":"Variable 400–900","cutSafe":false,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"russo-one","name":"Russo One","file":"RussoOne-Regular.ttf","directory":"russo-one","category":"display","style":"Regular","cutSafe":false,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"bungee-inline","name":"Bungee Inline","file":"BungeeInline-Regular.ttf","directory":"bungee-inline","category":"display","style":"Regular","cutSafe":false,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"anton","name":"Anton","file":"Anton-Regular.ttf","directory":"anton","category":"display","style":"Regular","cutSafe":false,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"black-ops-one","name":"Black Ops One","file":"BlackOpsOne-Regular.ttf","directory":"black-ops-one","category":"stencil","style":"Regular","cutSafe":true,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"cinzel","name":"Cinzel","file":"Cinzel-wght.ttf","directory":"cinzel","category":"serif","style":"Variable 400–900","cutSafe":false,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"stardos-stencil","name":"Stardos Stencil","file":"StardosStencil-Regular.ttf","directory":"stardos-stencil","category":"stencil","style":"Regular","cutSafe":true,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"saira-stencil-one","name":"Saira Stencil One","file":"SairaStencilOne-Regular.ttf","directory":"saira-stencil-one","category":"stencil","style":"Regular","cutSafe":true,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"pacifico","name":"Pacifico","file":"Pacifico-Regular.ttf","directory":"pacifico","category":"script","style":"Regular","cutSafe":false,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"great-vibes","name":"Great Vibes","file":"GreatVibes-Regular.ttf","directory":"great-vibes","category":"script","style":"Regular","cutSafe":false,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"lobster","name":"Lobster","file":"Lobster-Regular.ttf","directory":"lobster","category":"script","style":"Regular","cutSafe":false,"license":"OFL-1.1","source":"Google Fonts"},
+  {"id":"caveat","name":"Caveat","file":"Caveat-wght.ttf","directory":"caveat","category":"script","style":"Variable 400–700","cutSafe":false,"license":"OFL-1.1","source":"Google Fonts"}
+]

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NOPAL · Texto para fabricación</title>
+  <link rel="stylesheet" href="../frontend/font-library.css?v=6">
+  <style>
+    :root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#03080b;color:#e8eff2;font-family:Inter,system-ui,sans-serif}.harness{min-height:100vh;display:grid;grid-template-columns:220px 1fr}.sidebar{border-right:1px solid #132a34;background:#041017;padding:19px 14px}.brand{display:flex;gap:10px;align-items:center;margin:3px 8px 28px;font-weight:800;color:#65d24e}.brand i{font-style:normal;font-size:30px}.nav-category-items{display:grid;gap:7px}.nav-item{width:100%;display:flex;align-items:center;gap:10px;padding:11px;border:0;border-radius:9px;background:transparent;color:#90a5af;text-align:left;cursor:pointer}.nav-item:hover,.nav-item.active{background:#082d3b;color:#4ce2fb}.content{min-width:0}.harness-tools{position:fixed;z-index:1000;top:9px;right:10px;display:flex;gap:7px;padding:6px;border:1px solid #23404d;border-radius:9px;background:#07141a}.harness-tools label{display:flex;align-items:center;gap:7px;color:#91a6b0;font-size:11px}.harness-tools select{padding:6px;border:1px solid #2c4855;border-radius:6px;background:#0b1b23;color:white}.queue-note{position:fixed;z-index:1000;left:236px;bottom:8px;padding:8px 12px;border:1px solid #275b3d;border-radius:8px;background:#0d2417;color:#8fe6a9;font-size:11px;opacity:0;transition:.2s}.queue-note.show{opacity:1}@media(max-width:850px){.harness{display:block}.sidebar{display:none}.queue-note{left:10px}}
+  </style>
+</head>
+<body>
+  <div class="harness">
+    <aside class="sidebar"><div class="brand"><i>♣</i><span>NOPAL LABS</span></div><div class="nav-category" data-group="plugins"><div class="nav-category-items"></div></div></aside>
+    <main class="content"></main>
+  </div>
+  <div class="harness-tools"><label>Idioma <select id="language"><option value="es">Español</option><option value="en">English</option><option value="de">Deutsch</option><option value="fr">Français</option><option value="pt-BR">Português</option></select></label></div>
+  <div class="queue-note" id="queue-note">Trabajo SVG recibido por la cola simulada de NOPAL.</div>
+  <script>
+    window.__FONT_LIBRARY_HARNESS__ = true;
+    window.NopalPluginContext = { currentProject: { id: 'demo-sign-01', name: 'Letrero Recepción', material: 'MDF 3mm', machine: 'Sculpfun S30 Pro', availableArea: { width: 600, height: 400 } } };
+    window.NopalPluginRegistry = {};
+    window.switchSection = id => {
+      document.querySelectorAll('.view-section').forEach(section => section.style.display = section.id === id + '-section' ? 'block' : 'none');
+      document.querySelectorAll('.nav-item').forEach(button => button.classList.toggle('active', button.dataset.section === id));
+    };
+    window.applySidebarOrder = () => {};
+    document.getElementById('language').addEventListener('change', event => document.documentElement.lang = event.target.value);
+    window.addEventListener('nopal:enqueue-svg', event => {
+      event.preventDefault();
+      const note = document.getElementById('queue-note');
+      note.textContent = `Cola simulada: ${event.detail.filename} · ${event.detail.mode} · ${event.detail.material}`;
+      note.classList.add('show'); setTimeout(() => note.classList.remove('show'), 3500);
+    });
+    window.addEventListener('nopal:add-project-element', event => {
+      event.preventDefault();
+      window.__LAST_PROJECT_ELEMENT__ = event.detail;
+      const note = document.getElementById('queue-note');
+      note.textContent = `Proyecto simulado: ${event.detail.name} · ${event.detail.dimensions.widthMm.toFixed(1)} × ${event.detail.dimensions.heightMm.toFixed(1)} mm · arco ${event.detail.editable.arcDegrees.toFixed(0)}° · contorno ${event.detail.fabrication.outlineStyle}${event.detail.fabrication.outlineStyle === 'solid' ? ` ${event.detail.fabrication.outlineMm.toFixed(1)} mm` : ''}`;
+      note.classList.add('show'); setTimeout(() => note.classList.remove('show'), 5000);
+    });
+  </script>
+  <script src="../frontend/font-library.js?v=6"></script>
+  <script>window.addEventListener('load',()=>window.switchSection('font-library'));</script>
+</body>
+</html>
