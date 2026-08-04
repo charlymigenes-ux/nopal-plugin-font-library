@@ -617,8 +617,9 @@
             root.querySelector('#fl-metric-chars').textContent = [...state.text].length;
             root.querySelector('#fl-metric-contours').textContent = model.path.commands.filter(command => command.type === 'Z').length;
             root.querySelector('#fl-metric-size').textContent = `${model.widthMm.toFixed(1)} × ${model.heightMm.toFixed(1)} mm`;
-            if (state.targetWidthMm === null) root.querySelector('#fl-width-mm').value = model.widthMm.toFixed(1);
-            if (state.targetHeightMm === null) root.querySelector('#fl-height-mm').value = model.heightMm.toFixed(1);
+            const widthField = root.querySelector('#fl-width-mm'), heightField = root.querySelector('#fl-height-mm');
+            if (document.activeElement !== widthField) widthField.value = model.widthMm.toFixed(1);
+            if (document.activeElement !== heightField) heightField.value = model.heightMm.toFixed(1);
             updateManufacturingChecks(model);
             setStatus(tr('ready'), `${model.meta.name} · ${model.widthMm.toFixed(1)} × ${model.heightMm.toFixed(1)} mm`);
         } catch (error) {

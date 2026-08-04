@@ -76,7 +76,7 @@
 .fl-recent-strip button.selected { border-color: #b73374; }
 .fl-recent-strip small { max-width: 100%; color: #aab9c0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .fl-recent-strip span { font-size: 26px; color: #f4f5f6; white-space: nowrap; }
-.fl-recent-empty { color: #6f858f; padding: 30px; }
+.fl-recent-empty { grid-column: 1/-1; color: #6f858f; padding: 30px; }
 
 .fl-preview-card, .fl-info-card, .fl-quick-card { padding: 16px; }
 .fl-project-context { display: flex; align-items: center; gap: 11px; margin-bottom: 16px; padding: 11px 12px; border: 1px solid #21424e; border-radius: 9px; background: linear-gradient(90deg,#09202a,#08151b); }
