@@ -2,8 +2,13 @@
     'use strict';
 
     const PLUGIN_ID = 'font-library';
-    const VERSION = '0.4.1';
+    const VERSION = '0.5.0';
     if (window.NopalPluginRegistry?.[PLUGIN_ID]) return;
+
+    // Misma escala que usa el control manual de láser del núcleo de NOPAL
+    // para convertir potencia (0-100%) a valor S de GRBL -- ver
+    // LASER_POWER_S_MAX en backend/static/js/app.js.
+    const LASER_S_MAX = 1000;
 
     const scriptUrl = document.currentScript?.src || new URL('frontend/font-library.js', window.location.href).href;
     const pluginRoot = new URL('../', scriptUrl);
@@ -20,7 +25,7 @@
             import: 'Importar', all: 'Todas', favorites: 'Favoritas', recent: 'Recientes', preview: 'Vista previa',
             cut: 'Corte', engrave: 'Grabado', cnc: 'CNC', material: 'Material', power: 'Potencia', speed: 'Velocidad',
             passes: 'Pasadas', optimize: 'Optimizar para corte', optimizeHint: 'Prepara contornos y comprueba islas interiores',
-            exportSvg: 'Exportar SVG', saveLibrary: 'Guardar', sendLaser: 'Enviar a producción', information: 'Información',
+            exportSvg: 'Exportar SVG', saveLibrary: 'Guardar', sendLaser: 'Guardar G-code', information: 'Información',
             font: 'Tipografía', style: 'Estilo', type: 'Tipo', license: 'Licencia', file: 'Archivo', quick: 'Acciones rápidas',
             createText: 'Crear texto personalizado', convert: 'Convertir a trayectos', preset: 'Guardar preset de corte',
             ready: 'Lista', readyDetail: 'Selecciona una tipografía y escribe tu texto', loading: 'Cargando tipografías…',
@@ -30,8 +35,8 @@
             cutReady: 'Fuente recomendada para corte: sus puentes conservan las islas interiores.',
             imported: 'Tipografía importada', invalidFont: 'El archivo no es una tipografía TTF/OTF válida.',
             tooLarge: 'La tipografía supera el límite de 10 MB.', exported: 'SVG exportado correctamente.',
-            saved: 'SVG guardado en la Biblioteca NOPAL.', sent: 'Diseño enviado a la cola de producción.',
-            queuedDemo: 'Demo: el trabajo fue preparado para la cola de NOPAL.', saveFallback: 'Demo: se descargó el SVG porque no hay servidor NOPAL.',
+            saved: 'SVG guardado en la Biblioteca NOPAL.', sent: 'G-code guardado en Archivos, listo para enviar a producción.',
+            queuedDemo: 'Demo: se descargó el G-code porque no hay servidor NOPAL.', saveFallback: 'Demo: se descargó el SVG porque no hay servidor NOPAL.',
             presetSaved: 'Preset guardado localmente.', supports: 'Cobertura: ES · EN · DE · FR · PT-BR',
             custom: 'Importada', chars: 'Caracteres', contours: 'Contornos', dimensions: 'Dimensiones', laser: 'Láser',
             fontSize: 'Tamaño', sample: 'Nopal Labs', connected: 'Preparado para NOPAL', loadFailed: 'No se pudo cargar la tipografía.',
@@ -42,7 +47,7 @@
             favorites: 'Favorites', recent: 'Recent', preview: 'Preview', cut: 'Cut', engrave: 'Engrave', cnc: 'CNC',
             material: 'Material', power: 'Power', speed: 'Speed', passes: 'Passes', optimize: 'Optimize for cutting',
             optimizeHint: 'Prepare contours and check internal islands', exportSvg: 'Export SVG', saveLibrary: 'Save',
-            sendLaser: 'Send to production', information: 'Information', font: 'Font', style: 'Style', type: 'Type',
+            sendLaser: 'Save G-code', information: 'Information', font: 'Font', style: 'Style', type: 'Type',
             license: 'License', file: 'File', quick: 'Quick actions', createText: 'Create custom text',
             convert: 'Convert to paths', preset: 'Save cutting preset', ready: 'Ready',
             readyDetail: 'Select a font and type your text', loading: 'Loading fonts…', noResults: 'No fonts match this filter.',
@@ -50,8 +55,8 @@
             serif: 'Serif', script: 'Script', islandWarning: 'This font may leave loose islands when cut. Use a Stencil font or review bridges.',
             cutReady: 'Recommended for cutting: built-in bridges retain internal islands.', imported: 'Imported font',
             invalidFont: 'The file is not a valid TTF/OTF font.', tooLarge: 'The font exceeds the 10 MB limit.',
-            exported: 'SVG exported successfully.', saved: 'SVG saved to the NOPAL Library.', sent: 'Design sent to production queue.',
-            queuedDemo: 'Demo: the job was prepared for the NOPAL queue.', saveFallback: 'Demo: SVG downloaded because no NOPAL server is available.',
+            exported: 'SVG exported successfully.', saved: 'SVG saved to the NOPAL Library.', sent: 'G-code saved to Files, ready to send to production.',
+            queuedDemo: 'Demo: G-code downloaded because no NOPAL server is available.', saveFallback: 'Demo: SVG downloaded because no NOPAL server is available.',
             presetSaved: 'Preset saved locally.', supports: 'Coverage: ES · EN · DE · FR · PT-BR', custom: 'Imported',
             chars: 'Characters', contours: 'Contours', dimensions: 'Dimensions', laser: 'Laser', fontSize: 'Size',
             sample: 'Nopal Labs', connected: 'Ready for NOPAL', loadFailed: 'The font could not be loaded.', refresh: 'Refresh',
@@ -62,7 +67,7 @@
             all: 'Alle', favorites: 'Favoriten', recent: 'Zuletzt', preview: 'Vorschau', cut: 'Schneiden', engrave: 'Gravieren', cnc: 'CNC',
             material: 'Material', power: 'Leistung', speed: 'Geschwindigkeit', passes: 'Durchgänge', optimize: 'Für Schnitt optimieren',
             optimizeHint: 'Konturen vorbereiten und Inneninseln prüfen', exportSvg: 'SVG exportieren', saveLibrary: 'Speichern',
-            sendLaser: 'An Produktion senden', information: 'Informationen', font: 'Schriftart', style: 'Stil', type: 'Typ',
+            sendLaser: 'G-Code speichern', information: 'Informationen', font: 'Schriftart', style: 'Stil', type: 'Typ',
             license: 'Lizenz', file: 'Datei', quick: 'Schnellaktionen', createText: 'Eigenen Text erstellen',
             convert: 'In Pfade umwandeln', preset: 'Schnittprofil speichern', ready: 'Bereit',
             readyDetail: 'Schrift auswählen und Text eingeben', loading: 'Schriften werden geladen…', noResults: 'Keine passende Schrift gefunden.',
@@ -70,8 +75,8 @@
             serif: 'Serif', script: 'Handschrift', islandWarning: 'Diese Schrift kann beim Schneiden lose Innenflächen erzeugen. Schablonenschrift verwenden oder Stege prüfen.',
             cutReady: 'Für Schnitt empfohlen: integrierte Stege halten Innenflächen.', imported: 'Importierte Schrift',
             invalidFont: 'Die Datei ist keine gültige TTF/OTF-Schrift.', tooLarge: 'Die Schrift ist größer als 10 MB.',
-            exported: 'SVG erfolgreich exportiert.', saved: 'SVG in der NOPAL-Bibliothek gespeichert.', sent: 'Design an Produktionswarteschlange gesendet.',
-            queuedDemo: 'Demo: Auftrag für die NOPAL-Warteschlange vorbereitet.', saveFallback: 'Demo: SVG wurde ohne NOPAL-Server heruntergeladen.',
+            exported: 'SVG erfolgreich exportiert.', saved: 'SVG in der NOPAL-Bibliothek gespeichert.', sent: 'G-Code in Dateien gespeichert, bereit zum Senden an die Produktion.',
+            queuedDemo: 'Demo: G-Code heruntergeladen, da kein NOPAL-Server verfügbar ist.', saveFallback: 'Demo: SVG wurde ohne NOPAL-Server heruntergeladen.',
             presetSaved: 'Profil lokal gespeichert.', supports: 'Abdeckung: ES · EN · DE · FR · PT-BR', custom: 'Importiert',
             chars: 'Zeichen', contours: 'Konturen', dimensions: 'Abmessungen', laser: 'Laser', fontSize: 'Größe',
             sample: 'Nopal Labs', connected: 'Bereit für NOPAL', loadFailed: 'Schrift konnte nicht geladen werden.', refresh: 'Aktualisieren',
@@ -82,7 +87,7 @@
             import: 'Importer', all: 'Toutes', favorites: 'Favoris', recent: 'Récentes', preview: 'Aperçu', cut: 'Découpe',
             engrave: 'Gravure', cnc: 'CNC', material: 'Matériau', power: 'Puissance', speed: 'Vitesse', passes: 'Passages',
             optimize: 'Optimiser pour la découpe', optimizeHint: 'Préparer les contours et vérifier les îlots intérieurs',
-            exportSvg: 'Exporter SVG', saveLibrary: 'Enregistrer', sendLaser: 'Envoyer en production', information: 'Informations',
+            exportSvg: 'Exporter SVG', saveLibrary: 'Enregistrer', sendLaser: 'Enregistrer le G-code', information: 'Informations',
             font: 'Police', style: 'Style', type: 'Type', license: 'Licence', file: 'Fichier', quick: 'Actions rapides',
             createText: 'Créer un texte personnalisé', convert: 'Convertir en tracés', preset: 'Enregistrer le préréglage',
             ready: 'Prêt', readyDetail: 'Sélectionnez une police et saisissez votre texte', loading: 'Chargement des polices…',
@@ -91,8 +96,8 @@
             islandWarning: 'Cette police peut laisser des îlots libres lors de la découpe. Utilisez une police pochoir ou vérifiez les ponts.',
             cutReady: 'Recommandée pour la découpe : les ponts intégrés retiennent les îlots.', imported: 'Police importée',
             invalidFont: 'Le fichier ne contient pas une police TTF/OTF valide.', tooLarge: 'La police dépasse la limite de 10 Mo.',
-            exported: 'SVG exporté.', saved: 'SVG enregistré dans la bibliothèque NOPAL.', sent: 'Création envoyée en production.',
-            queuedDemo: 'Démo : le travail est préparé pour la file NOPAL.', saveFallback: 'Démo : SVG téléchargé sans serveur NOPAL.',
+            exported: 'SVG exporté.', saved: 'SVG enregistré dans la bibliothèque NOPAL.', sent: 'G-code enregistré dans Fichiers, prêt à envoyer en production.',
+            queuedDemo: 'Démo : G-code téléchargé sans serveur NOPAL.', saveFallback: 'Démo : SVG téléchargé sans serveur NOPAL.',
             presetSaved: 'Préréglage enregistré localement.', supports: 'Couverture : ES · EN · DE · FR · PT-BR', custom: 'Importée',
             chars: 'Caractères', contours: 'Contours', dimensions: 'Dimensions', laser: 'Laser', fontSize: 'Taille',
             sample: 'Nopal Labs', connected: 'Prêt pour NOPAL', loadFailed: 'Impossible de charger la police.', refresh: 'Actualiser',
@@ -103,7 +108,7 @@
             all: 'Todas', favorites: 'Favoritas', recent: 'Recentes', preview: 'Pré-visualização', cut: 'Corte', engrave: 'Gravação',
             cnc: 'CNC', material: 'Material', power: 'Potência', speed: 'Velocidade', passes: 'Passadas',
             optimize: 'Otimizar para corte', optimizeHint: 'Preparar contornos e verificar ilhas internas', exportSvg: 'Exportar SVG',
-            saveLibrary: 'Salvar', sendLaser: 'Enviar para produção', information: 'Informações', font: 'Fonte', style: 'Estilo',
+            saveLibrary: 'Salvar', sendLaser: 'Salvar G-code', information: 'Informações', font: 'Fonte', style: 'Estilo',
             type: 'Tipo', license: 'Licença', file: 'Arquivo', quick: 'Ações rápidas', createText: 'Criar texto personalizado',
             convert: 'Converter em caminhos', preset: 'Salvar predefinição de corte', ready: 'Pronto',
             readyDetail: 'Selecione uma fonte e digite o texto', loading: 'Carregando fontes…', noResults: 'Nenhuma fonte corresponde ao filtro.',
@@ -111,8 +116,8 @@
             serif: 'Serifada', script: 'Manuscrita', islandWarning: 'Esta fonte pode deixar ilhas soltas no corte. Use uma fonte estêncil ou revise as pontes.',
             cutReady: 'Recomendada para corte: as pontes integradas preservam as ilhas internas.', imported: 'Fonte importada',
             invalidFont: 'O arquivo não é uma fonte TTF/OTF válida.', tooLarge: 'A fonte excede o limite de 10 MB.',
-            exported: 'SVG exportado com sucesso.', saved: 'SVG salvo na Biblioteca NOPAL.', sent: 'Design enviado para a fila de produção.',
-            queuedDemo: 'Demonstração: trabalho preparado para a fila NOPAL.', saveFallback: 'Demonstração: SVG baixado porque não há servidor NOPAL.',
+            exported: 'SVG exportado com sucesso.', saved: 'SVG salvo na Biblioteca NOPAL.', sent: 'G-code salvo em Arquivos, pronto para enviar à produção.',
+            queuedDemo: 'Demonstração: G-code baixado porque não há servidor NOPAL.', saveFallback: 'Demonstração: SVG baixado porque não há servidor NOPAL.',
             presetSaved: 'Predefinição salva localmente.', supports: 'Cobertura: ES · EN · DE · FR · PT-BR', custom: 'Importada',
             chars: 'Caracteres', contours: 'Contornos', dimensions: 'Dimensões', laser: 'Laser', fontSize: 'Tamanho',
             sample: 'Nopal Labs', connected: 'Pronto para NOPAL', loadFailed: 'Não foi possível carregar a fonte.', refresh: 'Atualizar',
@@ -674,9 +679,9 @@
         root.querySelector('.fl-status-dot').dataset.tone = tone;
     }
 
-    function filename() {
+    function filename(extension = 'svg') {
         const base = (state.text || 'nopal-texto').trim().slice(0, 32).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').toLowerCase();
-        return `${base || 'nopal-texto'}-${state.mode}.svg`;
+        return `${base || 'nopal-texto'}-${state.mode}.${extension}`;
     }
 
     async function ensureGenerated() {
@@ -686,11 +691,15 @@
         return model;
     }
 
-    function downloadSvg(svg, name = filename()) {
-        const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+    function downloadFile(content, name, mime) {
+        const blob = new Blob([content], { type: mime });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob); link.download = name; link.click();
         setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+    }
+
+    function downloadSvg(svg, name = filename()) {
+        downloadFile(svg, name, 'image/svg+xml;charset=utf-8');
     }
 
     async function exportSvg() {
@@ -709,13 +718,111 @@
         window.loadModelsFolder?.(''); toast(tr('saved'));
     }
 
+    // Convierte los comandos de trazo de opentype.js (M/L/C/Q/Z, en el
+    // espacio propio del path -- ver generateModel()) a subtrayectos de
+    // puntos {x,y} planos, aproximando curvas Bezier cúbicas/cuadráticas
+    // con segmentos de línea rectos (suficiente a la escala de un texto;
+    // no es una tolerancia adaptativa, es una subdivisión fija).
+    const GCODE_CURVE_STEPS = 16;
+
+    function flattenPathCommands(commands, steps = GCODE_CURVE_STEPS) {
+        const subpaths = [];
+        let current = null;
+        let cur = { x: 0, y: 0 };
+        let start = { x: 0, y: 0 };
+        for (const cmd of commands) {
+            if (cmd.type === 'M') {
+                current = [{ x: cmd.x, y: cmd.y }];
+                subpaths.push(current);
+                cur = { x: cmd.x, y: cmd.y };
+                start = cur;
+            } else if (cmd.type === 'L') {
+                current?.push({ x: cmd.x, y: cmd.y });
+                cur = { x: cmd.x, y: cmd.y };
+            } else if (cmd.type === 'C') {
+                for (let i = 1; i <= steps; i += 1) {
+                    const t = i / steps, mt = 1 - t;
+                    current?.push({
+                        x: mt * mt * mt * cur.x + 3 * mt * mt * t * cmd.x1 + 3 * mt * t * t * cmd.x2 + t * t * t * cmd.x,
+                        y: mt * mt * mt * cur.y + 3 * mt * mt * t * cmd.y1 + 3 * mt * t * t * cmd.y2 + t * t * t * cmd.y,
+                    });
+                }
+                cur = { x: cmd.x, y: cmd.y };
+            } else if (cmd.type === 'Q') {
+                for (let i = 1; i <= steps; i += 1) {
+                    const t = i / steps, mt = 1 - t;
+                    current?.push({
+                        x: mt * mt * cur.x + 2 * mt * t * cmd.x1 + t * t * cmd.x,
+                        y: mt * mt * cur.y + 2 * mt * t * cmd.y1 + t * t * cmd.y,
+                    });
+                }
+                cur = { x: cmd.x, y: cmd.y };
+            } else if (cmd.type === 'Z') {
+                current?.push({ x: start.x, y: start.y });
+                cur = start;
+            }
+        }
+        return subpaths.filter(subpath => subpath.length > 1);
+    }
+
+    // G-code real (no una simulación): sigue el contorno exacto de las
+    // letras (sirve para "Corte" y trayectos de "CNC" -- para "Grabado" de
+    // verdad haría falta rellenar con líneas de barrido, que no está
+    // implementado todavía, así que también traza solo el contorno).
+    // Convención: SVG usa Y hacia abajo (origen arriba-izquierda); G-code
+    // espera Y hacia arriba (origen abajo-izquierda de la cama), por eso
+    // se invierte el eje Y al convertir a milímetros.
+    function buildGcodeFromModel(model) {
+        const width = Math.max(1, model.box.x2 - model.box.x1);
+        const height = Math.max(1, model.box.y2 - model.box.y1);
+        const scaleX = model.widthMm / width, scaleY = model.heightMm / height;
+        const toMm = (x, y) => ({
+            x: (x - model.box.x1) * scaleX,
+            y: model.heightMm - (y - model.box.y1) * scaleY,
+        });
+        const subpaths = flattenPathCommands(model.path.commands).map(subpath => subpath.map(point => toMm(point.x, point.y)));
+
+        const power = clamp(state.power, 0, 100);
+        const speed = Math.max(1, Number(state.speed) || 1);
+        const passes = Math.max(1, Number(state.passes) || 1);
+        const sValue = Math.round((power / 100) * LASER_S_MAX);
+        const fmt = value => value.toFixed(3);
+
+        const lines = [
+            `; Generado por NOPAL -- plugin "Texto para fabricación" v${VERSION}`,
+            `; Texto: ${(state.text || '').replace(/\r?\n/g, ' / ')}`,
+            `; Fuente: ${model.meta.name} -- modo: ${state.mode} -- material: ${state.material}`,
+            '; Traza el contorno de las letras (para "Grabado" real con relleno de barrido hace falta otra herramienta).',
+            'G21 ; milímetros',
+            'G90 ; coordenadas absolutas',
+            'M5 ; láser/husillo apagado',
+        ];
+        for (let pass = 1; pass <= passes; pass += 1) {
+            lines.push(`; -- pasada ${pass}/${passes} --`);
+            for (const subpath of subpaths) {
+                if (subpath.length < 2) continue;
+                lines.push(`G0 X${fmt(subpath[0].x)} Y${fmt(subpath[0].y)}`);
+                lines.push(`M3 S${sValue}`);
+                for (let i = 1; i < subpath.length; i += 1) {
+                    lines.push(`G1 X${fmt(subpath[i].x)} Y${fmt(subpath[i].y)} F${speed}`);
+                }
+                lines.push('M5');
+            }
+        }
+        lines.push('G0 X0 Y0', 'M2 ; fin de programa');
+        return lines.join('\n') + '\n';
+    }
+
     async function sendToProduction() {
         const model = await ensureGenerated();
-        const detail = { svg: model.svg, filename: filename(), mode: state.mode, material: state.material, power: state.power, speed: state.speed, passes: state.passes };
-        if (window.NopalJobQueue?.enqueueSvg) { await window.NopalJobQueue.enqueueSvg(detail); toast(tr('sent')); return; }
-        const event = new CustomEvent('nopal:enqueue-svg', { detail, cancelable: true });
-        window.dispatchEvent(event);
-        toast(window.__FONT_LIBRARY_HARNESS__ ? tr('queuedDemo') : tr('sent'));
+        const gcode = buildGcodeFromModel(model);
+        if (window.__FONT_LIBRARY_HARNESS__) { downloadFile(gcode, filename('gcode'), 'text/plain'); toast(tr('queuedDemo')); return; }
+        const form = new FormData();
+        form.append('file', new File([gcode], filename('gcode'), { type: 'text/plain' }));
+        form.append('type', 'gcode'); form.append('path', 'Biblioteca de tipografías');
+        const response = await fetch('/api/upload', { method: 'POST', body: form });
+        if (!response.ok) throw new Error((await response.json().catch(() => ({}))).detail || tr('loadFailed'));
+        toast(tr('sent'));
     }
 
     async function addToProject() {

@@ -12,7 +12,7 @@ class PluginContractTests(unittest.TestCase):
         manifest = json.loads((ROOT / "nopal-plugin.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["schema_version"], 1)
         self.assertEqual(manifest["id"], "font-library")
-        self.assertEqual(manifest["version"], "0.4.1")
+        self.assertEqual(manifest["version"], "0.5.0")
         self.assertEqual(manifest["frontend"]["section"], "font-library")
         self.assertTrue((ROOT / manifest["frontend"]["script"]).is_file())
         self.assertTrue((ROOT / manifest["frontend"]["style"]).is_file())

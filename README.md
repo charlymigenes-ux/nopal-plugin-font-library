@@ -17,8 +17,8 @@ Plugin independiente para crear texto con medidas físicas y devolverlo como un 
 - Dos estilos de contorno: **Sólido**, con grosor configurable en milímetros, y **Línea**, como trazo fino puro. Ambos se conservan en el SVG y en los metadatos del proyecto.
 - Parámetros de material, kerf/herramienta, puente mínimo, potencia, velocidad y pasadas.
 - Validaciones de área disponible, posibles islas interiores y detalles demasiado pequeños.
-- Acción principal **Agregar al proyecto**, que entrega SVG, posición, dimensiones, operación y datos editables mediante `NopalProject.addElement()` o el evento `nopal:add-project-element`.
-- Exportación SVG, guardado en Biblioteca y envío opcional a la cola de producción.
+- Acción principal **Agregar al proyecto**, que entrega SVG, posición, dimensiones, operación y datos editables mediante `NopalProject.addElement()` o el evento `nopal:add-project-element`. **Nota:** ese gancho no existe todavía en el núcleo de NOPAL -- hoy el botón muestra éxito pero los datos no se guardan en ningún lado (queda a la espera de que NOPAL core lo implemente).
+- Exportación SVG, guardado en la Biblioteca de NOPAL (sección "Impresión 3D", que pese al nombre acepta cualquier `.svg`/`.dxf` -- ver `MODEL_EXTENSIONS` en `backend/api/models.py` del núcleo), y **Guardar G-code**: convierte de verdad el contorno del texto a G-code real (aplanando curvas Bézier del propio glifo, con inversión de eje Y porque SVG usa Y hacia abajo y G-code espera Y hacia arriba) usando potencia/velocidad/pasadas del panel, y lo guarda como `.gcode` en la sección "Archivos" del núcleo, listo para enviarlo desde ahí. Solo traza el contorno -- sirve para "Corte" y trayectos tipo "CNC"; "Grabado" con relleno de barrido real no está implementado.
 
 ## Momento de uso
 

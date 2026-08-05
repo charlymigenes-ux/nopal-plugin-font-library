@@ -38,13 +38,13 @@
 .fl-browser-card, .fl-recent-card, .fl-preview-card, .fl-info-card, .fl-quick-card { border: 1px solid #192f39; border-radius: 13px; background: linear-gradient(155deg, rgba(8,18,24,.98), rgba(5,13,18,.98)); }
 .fl-browser-card { min-height: 650px; padding: 17px; }
 .fl-library-title { padding-bottom: 10px; border-bottom: 1px solid #162a34; }
-.fl-controls { gap: 12px; }
+.fl-controls { gap: 12px; flex-wrap: wrap; }
 .fl-search { min-width: 210px; flex: 1; height: 43px; display: flex; align-items: center; gap: 8px; padding: 0 12px; border: 1px solid #253844; border-radius: 8px; color: #879aa5; background: #0a1318; }
 .fl-search:focus-within { border-color: #af326f; box-shadow: 0 0 0 3px rgba(236,72,153,.09); }
 .fl-search input { width: 100%; min-width: 0; border: 0; outline: 0; color: white; background: transparent; }
 .fl-controls select, .fl-production-controls select, .fl-production-controls input[type="number"], .fl-preview-inputs input { height: 43px; border: 1px solid #2a3e49; border-radius: 8px; color: #dce6ea; background: #0a151b; outline: 0; }
 .fl-controls select { width: 185px; padding: 0 13px; }
-.fl-import-btn { height: 43px; display: flex; align-items: center; gap: 8px; padding: 0 18px; border: 0; border-radius: 8px; background: linear-gradient(#5ad34d,#3ba432); color: #fff; cursor: pointer; box-shadow: 0 8px 22px rgba(70,190,58,.16); }
+.fl-import-btn { flex: 1 0 100%; height: 43px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0 18px; border: 0; border-radius: 8px; background: linear-gradient(#5ad34d,#3ba432); color: #fff; cursor: pointer; box-shadow: 0 8px 22px rgba(70,190,58,.16); }
 .fl-import-btn:hover { filter: brightness(1.08); }
 
 .fl-tabs { height: 53px; display: flex; align-items: end; gap: 4px; border-bottom: 1px solid #1c3039; margin: 8px 0 14px; }
