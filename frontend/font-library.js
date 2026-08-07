@@ -2,7 +2,7 @@
     'use strict';
 
     const PLUGIN_ID = 'font-library';
-    const VERSION = '0.5.0';
+    const VERSION = '0.5.1';
     if (window.NopalPluginRegistry?.[PLUGIN_ID]) return;
 
     // Misma escala que usa el control manual de láser del núcleo de NOPAL
@@ -316,7 +316,7 @@
                             <div class="fl-warning" id="fl-warning"></div>
                             <div class="fl-checks"><strong data-i18n="checks"></strong><div id="fl-check-size" class="pass"></div><div id="fl-check-islands"></div><div id="fl-check-detail"></div></div>
                             <p class="fl-workshop-hint" data-i18n="workshopHint"></p>
-                            <div class="fl-primary-actions"><button id="fl-export">${icon('<path d="M12 3v12M7 10l5 5 5-5M4 20h16"/>',16)}<span data-i18n="exportSvg"></span></button><button class="primary" id="fl-add-project">${icon('<path d="M5 4h14v16H5zM9 12h6M12 9v6"/>',16)}<span data-i18n="addProject"></span></button></div>
+                            <div class="fl-primary-actions"><button id="fl-export">${icon('<path d="M12 3v12M7 10l5 5 5-5M4 20h16"/>',16)}<span data-i18n="exportSvg"></span></button><button class="primary" id="fl-send">${icon('<path d="M4 17h16M6 17V9h12v8M9 9V5h6v4M12 12v2"/>',16)}<span data-i18n="sendLaser"></span></button></div>
                         </section>
 
                         <section class="fl-info-card">
@@ -326,7 +326,7 @@
                             <div class="fl-metrics"><span><small data-i18n="chars"></small><strong id="fl-metric-chars">0</strong></span><span><small data-i18n="contours"></small><strong id="fl-metric-contours">0</strong></span><span><small data-i18n="dimensions"></small><strong id="fl-metric-size">—</strong></span></div>
                         </section>
 
-                        <section class="fl-quick-card"><h2 data-i18n="quick"></h2><button id="fl-focus-text">${icon('<path d="M5 4h14M12 4v16M8 20h8"/>',17)}<span data-i18n="createText"></span></button><button id="fl-convert">${icon('<path d="m4 17 6-10 4 6 3-5 3 9ZM4 20h16"/>',17)}<span data-i18n="convert"></span></button><button id="fl-save-preset">${icon('<path d="M5 3h12l2 2v16H5zM8 3v6h8V3"/>',17)}<span data-i18n="preset"></span></button><button id="fl-save-library">${icon('<path d="M4 5h16v14H4zM8 9h8M8 13h8"/>',17)}<span data-i18n="saveLibrary"></span></button><button id="fl-send">${icon('<path d="M4 17h16M6 17V9h12v8M9 9V5h6v4M12 12v2"/>',17)}<span data-i18n="sendLaser"></span></button></section>
+                        <section class="fl-quick-card"><h2 data-i18n="quick"></h2><button id="fl-focus-text">${icon('<path d="M5 4h14M12 4v16M8 20h8"/>',17)}<span data-i18n="createText"></span></button><button id="fl-convert">${icon('<path d="m4 17 6-10 4 6 3-5 3 9ZM4 20h16"/>',17)}<span data-i18n="convert"></span></button><button id="fl-save-preset">${icon('<path d="M5 3h12l2 2v16H5zM8 3v6h8V3"/>',17)}<span data-i18n="preset"></span></button><button id="fl-save-library">${icon('<path d="M4 5h16v14H4zM8 9h8M8 13h8"/>',17)}<span data-i18n="saveLibrary"></span></button><button id="fl-add-project">${icon('<path d="M5 4h14v16H5zM9 12h6M12 9v6"/>',17)}<span data-i18n="addProject"></span></button></section>
                     </aside>
                 </div>
                 <footer class="fl-status"><span class="fl-status-dot"></span><strong id="fl-status-title" data-i18n="ready"></strong><span id="fl-status-detail" data-i18n="readyDetail"></span><span class="fl-status-version">v${VERSION}</span><span class="fl-status-brand">♣ NOPAL Labs</span></footer>
